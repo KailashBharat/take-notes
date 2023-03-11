@@ -24,13 +24,20 @@
     <hr />
     <div class="description">{{ description }}</div>
     <div class="icons">
-      <img src="../../assets/bin.svg" alt="delete icon" />
+      <img
+        src="../../assets/bin.svg"
+        alt="delete icon"
+        @click="removeNoteId = id"
+      />
       <img src="../../assets/pencil.svg" alt="edit icon" @click="edit = true" />
     </div>
   </div>
+  <Modal :title="title" v-if="removeNoteId == id" @remove="(e)=>handleRemoval(e)"/>
 </template>
 <script lang="ts" setup>
 import { ref, watch } from "vue";
+import { deleteNote } from "@/api";
+import Modal from "@/components/main/Modal.vue";
 
 const props = defineProps({
   id: { type: String, required: true },
@@ -39,6 +46,7 @@ const props = defineProps({
 });
 
 const edit = ref(false);
+const removeNoteId = ref("");
 const updatedNote = ref({
   title: props.title,
   description: props.description,
@@ -48,6 +56,13 @@ const updatedNote = ref({
 watch(edit, () => {
   updatedNote.value.id = edit.value ? props.id : "";
 });
+
+async function handleRemoval(val: boolean) {
+  if (val) {
+    await deleteNote(removeNoteId.value);
+  }
+  removeNoteId.value = "";
+}
 </script>
 <style lang="scss" scoped>
 .card-container {
@@ -74,20 +89,6 @@ hr {
   width: 100%;
   color: #ebebb0;
   border: 1px solid #ebebb0;
-}
-
-.brighten {
-  z-index: 2;
-}
-
-.bg-dark {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
 }
 
 .description {
