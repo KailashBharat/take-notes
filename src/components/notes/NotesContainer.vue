@@ -4,6 +4,7 @@
       v-for="note in notes"
       :title="note.title"
       :description="note.description"
+      :id="note.id"
       :key="note.id"
     />
   </div>
