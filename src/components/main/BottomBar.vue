@@ -14,9 +14,7 @@ defineProps({ totalNotes: { type: Number, required: true } });
 </script>
 <style lang="scss" scoped>
 .container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  position: relative;
   background-color: white;
   width: 100%;
   display: flex;

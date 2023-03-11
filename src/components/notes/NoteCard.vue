@@ -13,6 +13,7 @@
   </div>
   <div class="card-container" v-else>
     <h4 class="title">{{ title }}</h4>
+    <hr/>
     <div class="description">{{ description }}</div>
     <div class="icons">
       <img src="../../assets/bin.svg" alt="delete icon" />
@@ -37,16 +38,38 @@ const edit = ref(false);
     0px 3px 4px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14);
   border-radius: 5px;
 
-  padding: 10px;
-  width: 200px;
-  height: 150px;
+  padding: 20px;
+  width: 300px;
   position: relative;
   display: flex;
   flex-direction: column;
+  height: min-content;
+
+  &:hover {
+    img {
+      visibility: visible;
+    }
+  }
 }
 
-.description{
-    
+hr{
+    width: 100%;
+    color: #EBEBB0;
+    border: 1px solid #EBEBB0;
+}
+
+.description {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: #767653;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  color: #767653;
 }
 
 textarea {
@@ -63,21 +86,19 @@ textarea {
 
 .icons {
   width: 100%;
+  margin-top: 15px;
   text-align: right;
-  position: absolute;
-  bottom: 0;
-  right: 10px;
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  gap: 15px;
+
   img {
     width: 25px;
     height: 25px;
     cursor: pointer;
     visibility: hidden;
-  }
-
-  &:hover {
-    img {
-      visibility: visible;
-    }
   }
 }
 </style>
