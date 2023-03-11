@@ -12,18 +12,22 @@
     >
     </textarea>
     <div class="btn-container">
-      <button>Add</button>
+      <button @click="createNote(note)">Add</button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
+import { createNote } from "@/api";
 
 const note = ref({
   title: "",
   description: "",
 });
 
+async function handleClick() {
+  await createNote(note.value);
+}
 </script>
 <style lang="scss" scoped>
 .card-container {
@@ -88,8 +92,6 @@ input {
     border-radius: 5px;
     border: none;
     cursor: pointer;
-
-
   }
 }
 </style>

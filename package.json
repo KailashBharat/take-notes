@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "biri": "^0.4.0",
+    "uuid": "^9.0.0",
     "vue": "^3.2.45"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.1",
     "@vitejs/plugin-vue": "^4.0.0",
     "path": "^0.12.7",
     "sass": "^1.59.2",

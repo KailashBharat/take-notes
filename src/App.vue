@@ -1,10 +1,25 @@
 <script setup lang="ts">
-import Home from '@/views/Home.vue';
+import Home from "@/views/Home.vue";
+import { v4 as id } from "uuid";
+import { onMounted } from "vue";
+
+onMounted(() => {
+  main();
+});
+
+function main() {
+  const userId = localStorage.getItem("userId");
+
+  if (!userId) {
+    const newUserId = id();
+    localStorage.setItem("userId", newUserId);
+  }
+}
 </script>
 
 <template>
   <div>
-    <Home/>
+    <Home />
   </div>
 </template>
 

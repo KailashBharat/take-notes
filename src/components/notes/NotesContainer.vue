@@ -11,60 +11,68 @@
 </template>
 <script lang="ts" setup>
 import { Note } from "@/types";
+import { getNotes } from "@/api";
+import { onMounted, ref } from "vue";
 import NoteCard from "./NoteCard.vue";
 
-const notes: Note[] = [
-  {
-    description: "Hello, I'm some placeholder text!",
-    id: "ewrar",
-    title: "This is me",
-  },
-  {
-    description:
-      "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-    id: "ewrar",
-    title: "rtesete",
-  },
-  { description: "test", id: "ewrar", title: "rtesete" },
-  {
-    description: "Hello, I'm some placeholder text!",
-    id: "ewrar",
-    title: "This is me",
-  },
-  { description: "test", id: "ewrar", title: "rtesete" },
-  {
-    description:
-      "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-    id: "ewrar",
-    title: "rtesete",
-  },
-  { description: "test", id: "ewrar", title: "rtesete" },
-  {
-    description:
-      "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-    id: "ewrar",
-    title: "rtesete",
-  },
-  {
-    description: "Hello, I'm some placeholder text!",
-    id: "ewrar",
-    title: "This is me",
-  },
-  { description: "test", id: "ewrar", title: "rtesete" },
-  {
-    description:
-      "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-    id: "ewrar",
-    title: "rtesete",
-  },
-  { description: "test", id: "ewrar", title: "rtesete" },
-  {
-    description:
-      "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-    id: "ewrar",
-    title: "rtesete",
-  },
-];
+const notes = ref<Note[]>([])
+
+onMounted(async()=>{
+  notes.value = await getNotes()
+})
+
+// const notes: Note[] = [
+//   {
+//     description: "Hello, I'm some placeholder text!",
+//     id: "ewrar",
+//     title: "This is me",
+//   },
+//   {
+//     description:
+//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
+//     id: "ewrar",
+//     title: "rtesete",
+//   },
+//   { description: "test", id: "ewrar", title: "rtesete" },
+//   {
+//     description: "Hello, I'm some placeholder text!",
+//     id: "ewrar",
+//     title: "This is me",
+//   },
+//   { description: "test", id: "ewrar", title: "rtesete" },
+//   {
+//     description:
+//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
+//     id: "ewrar",
+//     title: "rtesete",
+//   },
+//   { description: "test", id: "ewrar", title: "rtesete" },
+//   {
+//     description:
+//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
+//     id: "ewrar",
+//     title: "rtesete",
+//   },
+//   {
+//     description: "Hello, I'm some placeholder text!",
+//     id: "ewrar",
+//     title: "This is me",
+//   },
+//   { description: "test", id: "ewrar", title: "rtesete" },
+//   {
+//     description:
+//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
+//     id: "ewrar",
+//     title: "rtesete",
+//   },
+//   { description: "test", id: "ewrar", title: "rtesete" },
+//   {
+//     description:
+//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
+//     id: "ewrar",
+//     title: "rtesete",
+//   },
+// ];
 </script>
 <style lang="scss" scoped>
 .cards-container {
