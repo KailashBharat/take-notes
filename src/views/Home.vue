@@ -1,8 +1,8 @@
 <template>
   <TopBar />
   <NotesContainer />
-  <CreateNoteContainer/>
-  <BottomBar :total-notes="0" />
+  <CreateNoteContainer />
+  <BottomBar />
 </template>
 <script lang="ts" setup>
 import TopBar from "@/components/main/TopBar.vue";

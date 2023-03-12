@@ -12,21 +12,30 @@
     >
     </textarea>
     <div class="btn-container">
-      <button @click="createNote(note)">Add</button>
+      <button @click="handleClick()">Add</button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { createNote } from "@/api";
+import { Events } from "@/types";
+import { Emitter } from "mitt";
 
+const emitter = inject("emitter") as Emitter<Events>;
 const note = ref({
   title: "",
   description: "",
 });
 
 async function handleClick() {
-  await createNote(note.value);
+  const newNote = await createNote(note.value);
+
+  if (newNote) {
+    note.value.title = "";
+    note.value.description = "";
+    emitter.emit("rerenderNotes", true);
+  }
 }
 </script>
 <style lang="scss" scoped>

@@ -4,75 +4,35 @@
       v-for="note in notes"
       :title="note.title"
       :description="note.description"
-      :id="note.id"
-      :key="note.id"
+      :id="note._id"
+      :key="note._id"
     />
   </div>
 </template>
 <script lang="ts" setup>
 import { Note } from "@/types";
 import { getNotes } from "@/api";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, inject } from "vue";
 import NoteCard from "./NoteCard.vue";
+import { Events } from "@/types";
+import { Emitter } from "mitt";
 
-const notes = ref<Note[]>([])
+const notes = ref<Note[]>([]);
+const emitter= inject("emitter") as Emitter<Events>;
 
-onMounted(async()=>{
-  notes.value = await getNotes()
-})
+onMounted(async () => {
+  await handleUpdates();
 
-// const notes: Note[] = [
-//   {
-//     description: "Hello, I'm some placeholder text!",
-//     id: "ewrar",
-//     title: "This is me",
-//   },
-//   {
-//     description:
-//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-//     id: "ewrar",
-//     title: "rtesete",
-//   },
-//   { description: "test", id: "ewrar", title: "rtesete" },
-//   {
-//     description: "Hello, I'm some placeholder text!",
-//     id: "ewrar",
-//     title: "This is me",
-//   },
-//   { description: "test", id: "ewrar", title: "rtesete" },
-//   {
-//     description:
-//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-//     id: "ewrar",
-//     title: "rtesete",
-//   },
-//   { description: "test", id: "ewrar", title: "rtesete" },
-//   {
-//     description:
-//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-//     id: "ewrar",
-//     title: "rtesete",
-//   },
-//   {
-//     description: "Hello, I'm some placeholder text!",
-//     id: "ewrar",
-//     title: "This is me",
-//   },
-//   { description: "test", id: "ewrar", title: "rtesete" },
-//   {
-//     description:
-//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-//     id: "ewrar",
-//     title: "rtesete",
-//   },
-//   { description: "test", id: "ewrar", title: "rtesete" },
-//   {
-//     description:
-//       "testtesttesttesttestt esttestt esttestt esttesttesttest testtestt esttes ttestte sttest testt esttes tte stte sttes ttes ttest test test tes ttes tt esttes tt es tte stt es tt esttes tt est tes tt est t es ttest te stt est te stt est test te stt es ttes ttes t testt es ttes ttes ttestt est tes ttes tt est",
-//     id: "ewrar",
-//     title: "rtesete",
-//   },
-// ];
+  emitter.on("rerenderNotes", async () => {
+    handleUpdates();
+  });
+});
+
+async function handleUpdates() {
+  notes.value = await getNotes();
+  emitter.emit("totalNotes", notes.value.length)
+}
+
 </script>
 <style lang="scss" scoped>
 .cards-container {

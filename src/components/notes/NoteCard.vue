@@ -3,7 +3,7 @@
   <div
     class="card-container"
     v-if="edit"
-    :class="{ brighten: updatedNote.id == props.id }"
+    :class="{ brighten: updatedNote._id == props.id }"
   >
     <input class="title" v-model="updatedNote.title" />
     <hr />
@@ -15,7 +15,7 @@
     >
     </textarea>
     <div class="icons">
-      <button class="save">Save</button>
+      <button class="save" @click="() => handleUpdate()">Save</button>
       <button class="cancel" @click="edit = false">Cancel</button>
     </div>
   </div>
@@ -32,29 +32,36 @@
       <img src="../../assets/pencil.svg" alt="edit icon" @click="edit = true" />
     </div>
   </div>
-  <Modal :title="title" v-if="removeNoteId == id" @remove="(e)=>handleRemoval(e)"/>
+  <Modal
+    :title="title"
+    v-if="removeNoteId == id"
+    @remove="(e:boolean) => handleRemoval(e)"
+  />
 </template>
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-import { deleteNote } from "@/api";
+import { ref, watch, inject } from "vue";
+import { deleteNote, updateNote } from "@/api";
 import Modal from "@/components/main/Modal.vue";
+import { Events } from "@/types";
+import { Emitter } from "mitt";
 
 const props = defineProps({
   id: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
 });
+const emits = inject("emitter") as Emitter<Events>;
 
 const edit = ref(false);
 const removeNoteId = ref("");
 const updatedNote = ref({
   title: props.title,
   description: props.description,
-  id: "",
+  _id: "",
 });
 
 watch(edit, () => {
-  updatedNote.value.id = edit.value ? props.id : "";
+  updatedNote.value._id = edit.value ? props.id : "";
 });
 
 async function handleRemoval(val: boolean) {
@@ -62,6 +69,16 @@ async function handleRemoval(val: boolean) {
     await deleteNote(removeNoteId.value);
   }
   removeNoteId.value = "";
+  emits.emit("rerenderNotes", true);
+}
+
+async function handleUpdate() {
+  const note = await updateNote(updatedNote.value);
+
+  if (note) {
+    edit.value = false;
+    emits.emit("rerenderNotes", true);
+  }
 }
 </script>
 <style lang="scss" scoped>

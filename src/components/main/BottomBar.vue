@@ -10,7 +10,16 @@
   </div>
 </template>
 <script lang="ts" setup>
-defineProps({ totalNotes: { type: Number, required: true } });
+import { inject, onMounted, ref } from "vue";
+import { Emitter } from "mitt";
+import { Events } from "@/types";
+
+const emitter = inject("emitter") as Emitter<Events>;
+const totalNotes = ref(0);
+
+onMounted(() => {
+  emitter.on("totalNotes", (val: number) => (totalNotes.value = val));
+});
 </script>
 <style lang="scss" scoped>
 .container {

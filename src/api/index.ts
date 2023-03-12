@@ -26,7 +26,7 @@ export async function createNote(note: CreateNote): Promise<Note | null> {
 
 export async function updateNote(note: Note): Promise<Note | null> {
   try {
-    const url = new URL(`${gateway}/notes/${note.id}`);
+    const url = new URL(`${gateway}/notes/${note._id}`);
     const reqInit: RequestInit = {
       body: JSON.stringify({
         title: note.title,

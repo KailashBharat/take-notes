@@ -3,13 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://KailashBharat.github.io/take-notes",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "biri": "^0.4.0",
+    "mitt": "^3.0.0",
     "uuid": "^9.0.0",
     "vue": "^3.2.45"
   },
