@@ -24,4 +24,11 @@ import CreateNoteCard from "./CreateNoteCard.vue";
   color: #717171;
   margin-bottom: 20px;
 }
+
+@media screen and (max-width: 450px) {
+  .cards-container {
+    justify-content: flex-start;
+    padding: 20px;
+  }
+}
 </style>

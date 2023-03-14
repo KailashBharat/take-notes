@@ -35,12 +35,15 @@ const removeNote = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 150px;
+  // height: 150px;
 
   background: #ffffff;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   padding: 20px 50px;
+  min-width: 300px;
+  max-width: 600px;
+  text-align: center;
 
   display: flex;
   flex-direction: column;
@@ -72,6 +75,7 @@ const removeNote = () => {
   align-items: flex-end;
   display: flex;
   justify-content: space-around;
+  margin-top: 20px;
 
   button, .loader {
     background: #717171;
@@ -87,4 +91,22 @@ const removeNote = () => {
     }
   }
 }
+
+@media screen and (max-width:450px){
+  .inner-container{
+    min-width: unset;
+    width: 250px;
+    padding: 20px;
+  }
+
+  .buttons{
+    justify-content: space-between;
+
+    button{
+      padding: 10px 15px;
+    }
+  }
+}
+
+
 </style>

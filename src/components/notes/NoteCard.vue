@@ -175,4 +175,10 @@ input {
     visibility: hidden;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .card-container {
+    width: 250px;
+  }
+}
 </style>

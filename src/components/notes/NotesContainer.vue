@@ -47,11 +47,19 @@ async function handleUpdates() {
   width: 100vw;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 15px 10px;
   min-height: 400px;
   justify-content: center;
-  padding: 50px 0;
+  padding: 50px 20px;
   box-sizing: border-box;
   overflow: auto;
+}
+
+@media screen and (max-width: 450px) {
+  .cards-container{
+    justify-content: flex-start;
+    gap: 15px 0;
+    padding: 20px;
+  }
 }
 </style>

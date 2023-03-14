@@ -55,8 +55,8 @@ async function handleClick() {
   border-radius: 5px;
 
   padding: 20px;
-  width: 55%;
-  min-width: 200px;
+  width: 65%;
+  min-width: 250px;
   max-width: 600px;
   position: relative;
   display: flex;
@@ -116,4 +116,11 @@ input {
     cursor: pointer;
   }
 }
+
+@media screen and (max-width:450px){
+  
+}
+
+
+
 </style>

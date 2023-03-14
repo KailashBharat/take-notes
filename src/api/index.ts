@@ -1,11 +1,17 @@
 import { Note, CreateNote } from "@/types";
+import { getId } from "@/helpers";
 
 const gateway = import.meta.env.VITE_GATEWAY;
-const userId = localStorage.getItem("userId");
+let userId = localStorage.getItem("userId");
 
 export async function createNote(note: CreateNote): Promise<Note | null> {
   try {
     const url = new URL(`${gateway}/notes`);
+
+    if (!userId) {
+      userId = getId();
+    }
+
     const reqInit: RequestInit = {
       body: JSON.stringify({ ...note, userId }),
       headers: {
@@ -70,16 +76,15 @@ export async function deleteNote(id: string): Promise<Note | null> {
 export async function getNotes(): Promise<Note[]> {
   try {
     const url = new URL(`${gateway}/notes`);
-    
+
+    if (!userId) {
+      userId = getId();
+    }
+
     url.searchParams.append("userId", userId as string);
 
     const res = await fetch(url);
     const notes: Note[] = await res.json();
-
-    if (!userId) {
-      throw new Error("No userId found");
-    }
-
 
     return notes;
   } catch (error) {
