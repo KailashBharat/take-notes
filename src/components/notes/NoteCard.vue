@@ -15,7 +15,8 @@
     >
     </textarea>
     <div class="icons">
-      <button class="save" @click="() => handleUpdate()">Save</button>
+      <ClipLoader class="save" v-if="loading" size="10px" color="#FFFFFF" />
+      <button class="save" @click="() => handleUpdate()" v-else>Save</button>
       <button class="cancel" @click="edit = false">Cancel</button>
     </div>
   </div>
@@ -41,9 +42,10 @@
 <script lang="ts" setup>
 import { ref, watch, inject } from "vue";
 import { deleteNote, updateNote } from "@/api";
-import Modal from "@/components/main/Modal.vue";
+import Modal from "@/components/main/RemoveNoteModal.vue";
 import { Events } from "@/types";
 import { Emitter } from "mitt";
+import { ClipLoader } from "vue3-spinner";
 
 const props = defineProps({
   id: { type: String, required: true },
@@ -52,6 +54,7 @@ const props = defineProps({
 });
 const emits = inject("emitter") as Emitter<Events>;
 
+const loading = ref(false);
 const edit = ref(false);
 const removeNoteId = ref("");
 const updatedNote = ref({
@@ -73,12 +76,14 @@ async function handleRemoval(val: boolean) {
 }
 
 async function handleUpdate() {
+  loading.value = true;
   const note = await updateNote(updatedNote.value);
 
   if (note) {
     edit.value = false;
     emits.emit("rerenderNotes", true);
   }
+  loading.value = false;
 }
 </script>
 <style lang="scss" scoped>
@@ -123,7 +128,8 @@ input {
   color: #767653;
 }
 
-button {
+button,
+.save {
   cursor: pointer;
   padding: 10px 20px;
   background: #000000;

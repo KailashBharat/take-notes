@@ -12,7 +12,8 @@
     >
     </textarea>
     <div class="btn-container">
-      <button @click="handleClick()">Add</button>
+      <ClipLoader v-if="loading" size="27px" />
+      <button @click="handleClick()" v-else>Add</button>
     </div>
   </div>
 </template>
@@ -21,14 +22,21 @@ import { ref, inject } from "vue";
 import { createNote } from "@/api";
 import { Events } from "@/types";
 import { Emitter } from "mitt";
+import { ClipLoader } from "vue3-spinner";
 
 const emitter = inject("emitter") as Emitter<Events>;
+const loading = ref(false);
 const note = ref({
   title: "",
   description: "",
 });
 
 async function handleClick() {
+  if (!note.value.description && !note.value.title) {
+    return;
+  }
+
+  loading.value = true;
   const newNote = await createNote(note.value);
 
   if (newNote) {
@@ -36,6 +44,7 @@ async function handleClick() {
     note.value.description = "";
     emitter.emit("rerenderNotes", true);
   }
+  loading.value = false;
 }
 </script>
 <style lang="scss" scoped>
@@ -94,6 +103,10 @@ input {
 
 .btn-container {
   text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
   button {
     padding: 10px 20px;
     color: white;

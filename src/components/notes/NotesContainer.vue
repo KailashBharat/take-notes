@@ -1,5 +1,8 @@
 <template>
-  <div class="cards-container">
+  <div class="cards-container loader" v-if="loading">
+    <ClipLoader />
+  </div>
+  <div class="cards-container" v-else>
     <NoteCard
       v-for="note in notes"
       :title="note.title"
@@ -17,8 +20,11 @@ import NoteCard from "./NoteCard.vue";
 import { Events } from "@/types";
 import { Emitter } from "mitt";
 
+import { ClipLoader } from "vue3-spinner";
+
 const notes = ref<Note[]>([]);
-const emitter= inject("emitter") as Emitter<Events>;
+const loading = ref(false);
+const emitter = inject("emitter") as Emitter<Events>;
 
 onMounted(async () => {
   await handleUpdates();
@@ -29,10 +35,11 @@ onMounted(async () => {
 });
 
 async function handleUpdates() {
+  loading.value = true;
   notes.value = await getNotes();
-  emitter.emit("totalNotes", notes.value.length)
+  emitter.emit("totalNotes", notes.value.length);
+  loading.value = false;
 }
-
 </script>
 <style lang="scss" scoped>
 .cards-container {

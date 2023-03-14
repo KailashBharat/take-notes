@@ -11,13 +11,23 @@
     <p class="subtitle">This action cannot be undone</p>
     <div class="buttons">
       <button @click="emits('remove', false)">Cancel</button>
-      <button class="red" @click="emits('remove', true)">Remove</button>
+      <ClipLoader class="red loader" v-if="loading" size="10px" color="#FFFFFF" />
+      <button class="red" @click="() => removeNote()" v-else>Remove</button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import { ClipLoader } from "vue3-spinner";
+import { ref } from "vue";
+
 defineProps({ title: String });
 const emits = defineEmits(["remove"]);
+const loading = ref(false);
+
+const removeNote = () => {
+  loading.value = true;
+  emits("remove", true);
+};
 </script>
 <style lang="scss" scoped>
 .inner-container {
@@ -63,7 +73,7 @@ const emits = defineEmits(["remove"]);
   display: flex;
   justify-content: space-around;
 
-  button {
+  button, .loader {
     background: #717171;
     border-radius: 5px;
     padding: 10px 25px;

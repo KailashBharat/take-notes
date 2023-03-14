@@ -15,10 +15,12 @@
     "biri": "^0.4.0",
     "mitt": "^3.0.0",
     "uuid": "^9.0.0",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue3-spinner": "^0.0.16"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.1",
+    "@types/vue": "^2.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "path": "^0.12.7",
     "sass": "^1.59.2",

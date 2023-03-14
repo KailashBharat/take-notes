@@ -7,9 +7,11 @@
     "strict": true,
     "jsx": "preserve",
     "resolveJsonModule": true,
+    "declaration": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
+    "types": ["vite/client"],
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
