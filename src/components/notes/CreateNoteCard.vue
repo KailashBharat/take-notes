@@ -4,7 +4,7 @@
     <hr />
     <textarea
       name="desciption"
-      placeholder="Type your text here. Feel free to use markdown"
+      placeholder="Type your text here..."
       id=""
       cols="30"
       rows="10"
