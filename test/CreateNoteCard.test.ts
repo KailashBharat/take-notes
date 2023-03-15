@@ -13,5 +13,4 @@ test("it should work", async () => {
   await fireEvent.update(noteTitleInput, "Title")
   await fireEvent.update(noteDescriptionInput, "Description")
 
-//   getByText("Title")
 });

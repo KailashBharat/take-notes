@@ -2,6 +2,9 @@
   <div class="cards-container loader" v-if="loading">
     <ClipLoader />
   </div>
+  <div class="cards-container no-notes" v-else-if="!loading && !notes.length">
+    <div>No notes found...</div>
+  </div>
   <div class="cards-container" v-else>
     <NoteCard
       v-for="note in notes"
@@ -55,11 +58,17 @@ async function handleUpdates() {
   overflow: auto;
 }
 
+.loader, .no-notes {
+  align-items: center;
+  color: #767653;
+}
+
 @media screen and (max-width: 450px) {
-  .cards-container{
-    justify-content: flex-start;
+  .cards-container {
+    // justify-content: flex-start;
     gap: 15px 0;
     padding: 20px;
   }
+
 }
 </style>
